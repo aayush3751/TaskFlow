@@ -6,13 +6,6 @@ import React, { useState } from 'react';
 import {Footer} from "./myComponents/footer";
 import {AddTodo} from "./myComponents/AddTodo";
 function App() {
-  const onDelete = (todow) => {
-    console.log("I am ondelete", todow);
-    setTodos(todos.filter((e) =>{ 
-      return e!==todow;
-    }));
-
-  }
   const [todos, setTodos] = useState([
     {
       sno: 1,
@@ -30,10 +23,28 @@ function App() {
       desc: "You need to work out"
     }
   ]);
+
+  const onDelete = (todow) => {
+    console.log("I am ondelete", todow);
+    setTodos(todos.filter((e) =>{
+      return e!==todow;
+    }));
+  }
+
+  const addToDo = ({ title, desc }) => {
+    const nextSno = todos.length + 1;
+    const newTodo = {
+      sno: nextSno,
+      title: title,
+      desc: desc,
+    };
+    setTodos([...todos, newTodo]);
+    console.log('Added todo:', newTodo);
+  }
   return (
     <>
    <Header title="your title" searchbox={true}/>
-      <AddTodo />
+      <AddTodo addToDo={addToDo} />
    <ToDos todos={todos} onDelete={onDelete}/>
 
    <Footer />
